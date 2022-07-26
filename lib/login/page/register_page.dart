@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_deer/account/models/sms_entity.dart';
+import 'package:flutter_deer/login/login_router.dart';
+import 'package:flutter_deer/login/models/register_entity.dart';
 import 'package:flutter_deer/login/widgets/my_text_field.dart';
+import 'package:flutter_deer/net/dio_utils.dart';
+import 'package:flutter_deer/net/http_api.dart';
 import 'package:flutter_deer/res/resources.dart';
+import 'package:flutter_deer/routers/fluro_navigator.dart';
 import 'package:flutter_deer/util/change_notifier_manage.dart';
 import 'package:flutter_deer/util/other_utils.dart';
 import 'package:flutter_deer/util/toast_utils.dart';
@@ -27,7 +33,7 @@ class _RegisterPageState extends State<RegisterPage> with ChangeNotifierMixin<Re
   final FocusNode _nodeText2 = FocusNode();
   final FocusNode _nodeText3 = FocusNode();
   bool _clickable = false;
-  
+
   @override
   Map<ChangeNotifier, List<VoidCallback>?>? changeNotifier() {
     final List<VoidCallback> callbacks = <VoidCallback>[_verify];
@@ -40,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> with ChangeNotifierMixin<Re
       _nodeText3: null,
     };
   }
-  
+
   void _verify() {
     final String name = _nameController.text;
     final String vCode = _vCodeController.text;
@@ -49,7 +55,7 @@ class _RegisterPageState extends State<RegisterPage> with ChangeNotifierMixin<Re
     if (name.isEmpty || name.length < 11) {
       clickable = false;
     }
-    if (vCode.isEmpty || vCode.length < 6) {
+    if (vCode.isEmpty || vCode.length < 4) {
       clickable = false;
     }
     if (password.isEmpty || password.length < 6) {
@@ -61,9 +67,21 @@ class _RegisterPageState extends State<RegisterPage> with ChangeNotifierMixin<Re
       });
     }
   }
-  
+
   void _register() {
     Toast.show('点击注册');
+    final params = { 'phone': _nameController.text, 'verifyCode': _vCodeController.text, 'password': _passwordController.text };
+    DioUtils.instance.requestNetwork<RegisterEntity>(
+        Method.post, HttpApi.register,
+        params: params,
+        onSuccess: (data) {
+          Toast.show('注册成功');
+          NavigatorUtils.push(context, LoginRouter.loginPage);
+        },
+        onError: (_, __) {
+          Toast.show('错误：$__');
+        }
+    );
   }
 
   @override
@@ -104,7 +122,18 @@ class _RegisterPageState extends State<RegisterPage> with ChangeNotifierMixin<Re
         keyboardType: TextInputType.number,
         getVCode: () async {
           if (_nameController.text.length == 11) {
-            Toast.show(DeerLocalizations.of(context)!.verificationButton);
+            final params = { 'mobile': _nameController.text, 'verifyCodeType': 'USER_REGISTER' };
+            await DioUtils.instance.requestNetwork<SmsEntity>(
+                Method.post, HttpApi.sendSms,
+                params: params,
+                onSuccess: (data) {
+                  Toast.show('验证码已发送到您的手机，请注意查收');
+                  _vCodeController.text = '${data?.verifyCode}';
+                },
+                onError: (_, __) {
+                  Toast.show('错误：$__');
+                }
+            );
             /// 一般可以在这里发送真正的请求，请求成功返回true
             return true;
           } else {

@@ -17,7 +17,7 @@ class AuthInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final String accessToken = SpUtil.getString(Constant.accessToken).nullSafe;
     if (accessToken.isNotEmpty) {
-      options.headers['Authorization'] = 'token $accessToken';
+      options.headers['Authorization'] = accessToken;
     }
     if (!Device.isWeb) {
       // https://developer.github.com/v3/#user-agent-required
@@ -60,7 +60,7 @@ class TokenInterceptor extends QueuedInterceptor {
       if (accessToken != null) {
         // 重新请求失败接口
         final RequestOptions request = response.requestOptions;
-        request.headers['Authorization'] = 'Bearer $accessToken';
+        request.headers['Authorization'] = accessToken;
 
         final Options options = Options(
           headers: request.headers,
@@ -135,6 +135,7 @@ class AdapterInterceptor extends Interceptor{
   static const String _kMsg = 'msg';
   static const String _kSlash = "'";
   static const String _kMessage = 'message';
+  static const String _kError= 'error';
 
   static const String _kDefaultText = '无返回信息';
   static const String _kNotFound = '未找到查询信息';
@@ -164,7 +165,8 @@ class AdapterInterceptor extends Interceptor{
       if (content.isEmpty) {
         content = _kDefaultText;
       }
-      result = sprintf(_kSuccessFormat, [content]);
+      //result = sprintf(_kSuccessFormat, [content]);
+      result = content;
       response.statusCode = ExceptionHandle.success;
     } else {
       if (response.statusCode == ExceptionHandle.not_found) {
@@ -183,7 +185,10 @@ class AdapterInterceptor extends Interceptor{
               content = content.substring(1, content.length - 1);
             }
             final Map<String, dynamic> map = json.decode(content) as Map<String, dynamic>;
-            if (map.containsKey(_kMessage)) {
+            //{\"code\":-1,\"error\":\"字段类型或枚举不匹配\",\"message\":null,\"errors\":null,\"data\":null}
+            if (map.containsKey(_kError) && map[_kError] != null) {
+              msg = map[_kError] as String;
+            } else if (map.containsKey(_kMessage) && map[_kMessage] != null) {
               msg = map[_kMessage] as String;
             } else if (map.containsKey(_kMsg)) {
               msg = map[_kMsg] as String;

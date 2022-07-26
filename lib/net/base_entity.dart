@@ -2,12 +2,14 @@ import 'package:flutter_deer/generated/json/base/json_convert_content.dart';
 import 'package:flutter_deer/res/constant.dart';
 
 class BaseEntity<T> {
-
   BaseEntity(this.code, this.message, this.data);
 
   BaseEntity.fromJson(Map<String, dynamic> json) {
     code = json[Constant.code] as int?;
-    message = json[Constant.message] as String;
+    final json2 = json[Constant.message];
+    if (json2 != null) {
+      message = json2 as String;
+    }
     if (json.containsKey(Constant.data)) {
       data = _generateOBJ<T>(json[Constant.data] as Object);
     }
