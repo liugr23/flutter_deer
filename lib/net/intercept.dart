@@ -32,15 +32,17 @@ class TokenInterceptor extends QueuedInterceptor {
   Dio? _tokenDio;
 
   Future<String?> getToken() async {
-
+    final String accessToken = SpUtil.getString(Constant.accessToken).nullSafe;
+    final String refreshToken = SpUtil.getString(Constant.refreshToken).nullSafe;
     final Map<String, String> params = <String, String>{};
-    params['refresh_token'] = SpUtil.getString(Constant.refreshToken).nullSafe;
+    params['refreshToken'] = refreshToken;
+    params['accessToken'] = accessToken;
     try {
       _tokenDio ??= Dio();
       _tokenDio!.options = DioUtils.instance.dio.options;
-      final Response<dynamic> response = await _tokenDio!.post<dynamic>('lgn/refreshToken', data: params);
+      final Response<dynamic> response = await _tokenDio!.post<dynamic>('app/v2/open/refresh-token', data: params);
       if (response.statusCode == ExceptionHandle.success) {
-        return (json.decode(response.data.toString()) as Map<String, dynamic>)['access_token'] as String;
+        return (json.decode(response.data.toString()) as Map<String, dynamic>)[Constant.accessToken] as String;
       }
     } catch(e) {
       Log.e('刷新Token失败！');
