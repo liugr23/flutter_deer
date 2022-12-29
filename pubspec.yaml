@@ -8,8 +8,8 @@ homepage: https://weilu.blog.csdn.net/
 publish_to: 'none'
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
-  flutter: ">=3.0.0 <4.0.0"
+  sdk: ">=2.18.0 <3.0.0"
+  flutter: ">=3.3.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -22,8 +22,8 @@ dependencies:
   intl: ^0.17.0
   # Toast插件 https://github.com/OpenFlutter/flutter_oktoast
   oktoast: ^3.3.1
-  # 网络库 https://github.com/flutterchina/dio
-  dio: ^4.0.6
+  # 网络库 https://github.com/cfug/diox
+  diox: ^5.0.0-dev.1
   # https://github.com/ReactiveX/rxdart
   rxdart: ^0.27.5
   # Dart 常用工具类库 https://github.com/Sky24n/common_utils
@@ -47,7 +47,7 @@ dependencies:
   # 城市选择列表 https://github.com/flutterchina/azlistview
   azlistview: ^2.0.0
   # 路由框架 https://github.com/theyakka/fluro
-  fluro: ^2.0.3
+  fluro: ^2.0.4
   # 图片缓存 https://github.com/renefloor/flutter_cached_network_image
   cached_network_image: ^3.2.1
   # 格式化String https://github.com/Naddiseo/dart-sprintf
@@ -61,8 +61,9 @@ dependencies:
   #      ref: fix_break_changes_platform
   # App Shortcuts https://github.com/flutter/plugins/tree/master/packages/quick_actions
   quick_actions: 1.0.1
-  # 振动（支持Web） https://github.com/benjamindean/flutter_vibration
-  vibration: ^1.7.5
+  # 振动 https://github.com/benjamindean/flutter_vibration
+  vibration: 1.7.6
+  vibration_web: 1.6.5
   # 获取当前设备信息 https://github.com/fluttercommunity/plus_plugins/tree/main/packages/device_info_plus
   device_info_plus: 8.0.0
   # 改变桌面端窗口大小(MacOS/Linux/Windows) https://github.com/mix1009/desktop_window
@@ -76,7 +77,7 @@ dependencies:
   # 刮刮卡 https://github.com/vintage/scratcher
   scratcher: ^2.3.0
   # 动画效果 https://github.com/xvrh/lottie-flutter
-  lottie: ^1.4.1
+  lottie: ^2.0.0
   flutter_easyloading: ^3.0.5
 
 # https://github.com/simplezhli/flutter_deer/issues/187
