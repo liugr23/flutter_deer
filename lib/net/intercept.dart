@@ -1,7 +1,7 @@
 
 import 'dart:convert';
 
-import 'package:diox/diox.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_deer/res/constant.dart';
 import 'package:flutter_deer/util/device_utils.dart';
 import 'package:flutter_deer/util/log_utils.dart';
@@ -106,7 +106,7 @@ class LoggingInterceptor extends Interceptor{
     Log.d('RequestMethod: ${options.method}');
     Log.d('RequestHeaders:${options.headers}');
     Log.d('RequestContentType: ${options.contentType}');
-    Log.d('RequestData: ${options.data.toString()}');
+    Log.d('RequestData: ${options.data}');
     super.onRequest(options, handler);
   }
   

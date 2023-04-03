@@ -27,7 +27,7 @@ The effect of some pages is as follows:
 
 * mvp mode
 * Use `provider`(version 6.x) for state management
-* Network request encapsulation based on `diox` (version 5.x)
+* Network request encapsulation based on `dio` (version 5.x)
 * Driver testing, accessibility testing.
 * Support dark mode
 * Localization（Thanks @ghedwards）  
@@ -61,9 +61,9 @@ Web：https://simplezhli.github.io/flutter_deer/
 
 [![Build Status](https://github.com/simplezhli/flutter_deer/workflows/flutter_deer%20driver/badge.svg?branch=master)](https://github.com/simplezhli/flutter_deer/actions?query=workflow%3A%22flutter_deer+driver%22+branch%3Amaster)
 
-    1. Flutter version 3.3.7
+    1. Flutter version 3.7.5
 
-    2. Dart version 2.18.4
+    2. Dart version 2.19.2
 
 ## Precautions
 
@@ -117,7 +117,7 @@ Web：https://simplezhli.github.io/flutter_deer/
 
 | 库                         | 功能             |
 | -------------------------- | --------------- |
-| [diox](https://github.com/cfug/diox)                            | **Network library**       |
+| [dio](https://github.com/cfug/dio)                            | **Network library**       |
 | [provider](https://github.com/rrousselGit/provider)                   | **State management**     |
 | [flutter_2d_amap](https://github.com/simplezhli/flutter_2d_amap)      | **2D AMap**   |
 | [cached_network_image](https://github.com/renefloor/flutter_cached_network_image)       | **Image loading**       |
