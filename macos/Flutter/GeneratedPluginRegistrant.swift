@@ -7,9 +7,9 @@ import Foundation
 
 import device_info_plus
 import file_selector_macos
-import path_provider_foundation
+import path_provider_macos
 import screen_retriever
-import shared_preferences_foundation
+import shared_preferences_macos
 import sqflite
 import url_launcher_macos
 import window_manager
